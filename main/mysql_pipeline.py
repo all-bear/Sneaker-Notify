@@ -30,7 +30,7 @@ class MYSQL_Pipeline(object):
     
   def __init__(self):
     # Database connection info. (host, user, password, database)
-    self.conn = MySQLdb.connect(host=' HOST NAME HERE ', user=' USER NAME HERE ', passwd=' PASSWORD HERE ', db=' DATABASE NAME HERE ', charset="utf8", use_unicode=True)
+    self.conn = MySQLdb.connect(host='45.55.94.69', user='supervisor', passwd='web', db='sneakercrowler', charset="utf8", use_unicode=True)
     self.conn.ping(True)
     self.cursor = self.conn.cursor()
     
@@ -520,14 +520,15 @@ class MYSQL_Pipeline(object):
         self.conn.commit()
 		
         # If item name contain below words. Tweet it.
-        if ('nmd' in item['name'].encode('utf-8').lower()) or ('ultra' in item['name'].encode('utf-8').lower() and 'boost' in item['name'].encode('utf-8').lower()) or ('jordan' in item['name'].encode('utf-8').lower() and 'retro' in item['name'].encode('utf-8').lower()) or ('yeezy' in item['name'].encode('utf-8').lower()) or ('max' in item['name'].encode('utf-8').lower() and 'atmos' in item['name'].encode('utf-8').lower()) or ('max' in item['name'].encode('utf-8').lower() and 'master' in item['name'].encode('utf-8').lower()) or ('ronnie' in item['name'].encode('utf-8').lower()) or ('fieg' in item['name'].encode('utf-8').lower()):
-		
+        keywords = ['nmd','ultra boost','jordan retro','yeezy','max atmos','max master','ronnie','fieg','yeezy','yeezy boost','yeezy 350 boost','nmd','ultraboost','flyknit racer','flyknit trainer','ultra boost','vapormax','air max 97','air max 1','mars yard','purecontrol','eqt support']
+
+        if any(keyword in item['name'].encode('utf-8').lower() for keyword in keywords):
 		  # Twitter Auth - Tweet the item with date, time, item name, and link.
           # To obtain Twitter CONSUMER and ACCESS keys go to https://apps.twitter.com/
-          CONSUMER_KEY = ' PASTE CONSUMER_KEY HERE '
-          CONSUMER_SECRET = ' PASTE CONSUMER_SECRET HERE '
-          ACCESS_TOKEN_KEY = ' PASTE ACCESS_TOKEN_KEY HERE '
-          ACCESS_TOKEN_SECRET = ' PASTE ACCESS_TOKEN_SECRET HERE '
+          CONSUMER_KEY = 'gqJKaS5r9re7BZQ9lyM45Fctv'
+          CONSUMER_SECRET = 'wzrE6PXImBRSU4pheYkbuKzfKtdijtVxqITd03SfNEztd6doXW'
+          ACCESS_TOKEN_KEY = '879923269335371776-IL2UArZL4UKLKOiNZPZWyc7mp9ESGqV'
+          ACCESS_TOKEN_SECRET = 'sLubdW04thF9QC7AZTNZP9JmHML4V9yB6e2BSmV9TN37Z'
           API = TwitterAPI(CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN_KEY, ACCESS_TOKEN_SECRET)
           TEXT_TO_TWEET = DATE + " EST " + item['name'] + " " + item['link']
           TWEET = API.request('statuses/update', {'status': TEXT_TO_TWEET})
